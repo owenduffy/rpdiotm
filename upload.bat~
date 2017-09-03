@@ -1,0 +1,5 @@
+node C:\Users\owen\AppData\Roaming\npm\node_modules\nodemcu-tool\bin\nodemcu-tool -p com9 reset
+dir
+sleep 10
+echo here...
+node C:\Users\owen\AppData\Roaming\npm\node_modules\nodemcu-tool\bin\nodemcu-tool  -p com9 upload dhtiot.lua nodevars.lua wifi_setup.lua init.lua
