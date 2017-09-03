@@ -108,18 +108,6 @@ function slp()
   node.dsleep(meas_period*1000000-tmr.now()+8100,2)             
 end
 
-print("pwrdisp starting...")
---init pins
-gpio.write(latchPin,gpio.HIGH)
-gpio.write(dataPin,gpio.HIGH)
-gpio.write(clockPin,gpio.HIGH)
-gpio.mode(latchPin,gpio.OUTPUT)
-gpio.mode(dataPin,gpio.OUTPUT)
-gpio.mode(clockPin,gpio.OUTPUT)
-
---start WiFi
-swf()
-
 function sout(bb)
   --write LED display
   gpio.write(latchPin,gpio.LOW)
@@ -138,3 +126,16 @@ function sout(bb)
   gpio.write(dataPin,gpio.HIGH)
   gpio.write(clockPin,gpio.HIGH)
 end
+
+print("pwrdisp starting...")
+--init pins
+gpio.write(latchPin,gpio.HIGH)
+gpio.write(dataPin,gpio.HIGH)
+gpio.write(clockPin,gpio.HIGH)
+gpio.mode(latchPin,gpio.OUTPUT)
+gpio.mode(dataPin,gpio.OUTPUT)
+gpio.mode(clockPin,gpio.OUTPUT)
+sout(0)
+--start WiFi
+swf()
+
