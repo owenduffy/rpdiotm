@@ -93,7 +93,7 @@ function writedisplay(client,mtopic,data)
           bb=bb+ssencode["."]
         end
       end
---    bb=bit.bnot(bb) --invert for common cathode display
+--    bb=bit.bnot(bb) --invert for common anode display
   sval=string.format("%08x",bb)
   sval=string.gsub(sval,"(..)(..)(..)(..)","%1 %2 %3 %4")
 print(sval)
