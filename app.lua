@@ -93,10 +93,12 @@ function writedisplay(client,mtopic,data)
           bb=bb+ssencode["."]
         end
       end
---    bb=bit.bnot(bb) --invert for common anode display
-  sval=string.format("%08x",bb)
-  sval=string.gsub(sval,"(..)(..)(..)(..)","%1 %2 %3 %4")
-print(sval)
+      if(invert_display) then
+        bb=bit.bnot(bb) --invert for common anode display
+      end
+      sval=string.format("%08x",bb)
+      sval=string.gsub(sval,"(..)(..)(..)(..)","%1 %2 %3 %4")
+      print(sval)
 --      print (to_binary(bb))
       sout(bb)
     end
@@ -135,7 +137,12 @@ gpio.write(clockPin,gpio.HIGH)
 gpio.mode(latchPin,gpio.OUTPUT)
 gpio.mode(dataPin,gpio.OUTPUT)
 gpio.mode(clockPin,gpio.OUTPUT)
-sout(0)
+
+if(invert_display) then
+  sout(0xffffffff)
+else
+  sout(0)
+end
 --start WiFi
 swf()
 
