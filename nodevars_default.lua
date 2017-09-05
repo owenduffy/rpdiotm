@@ -17,3 +17,8 @@ client_netmask=""
 client_gateway=""
 
 invert_display=false
+
+--pin mapping
+RCK=3
+SER=4
+SRCLK=2

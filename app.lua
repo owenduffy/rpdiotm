@@ -5,11 +5,6 @@
 dofile("nodevars.lua")
 --# END settings #
 
---pin mapping
-latchPin=3
-dataPin=4
-clockPin=2
-
 function to_binary(value)
   -- Formats an incoming integer value into a 32 bit binary string
   convert={["0"]="0000",["1"]="0001",["2"]="0010",["3"]="0011",
@@ -112,31 +107,31 @@ end
 
 function sout(bb)
   --write LED display
-  gpio.write(latchPin,gpio.LOW)
+  gpio.write(RCK,gpio.LOW)
   for i=0,31 do
-    gpio.write(clockPin,gpio.LOW)
+    gpio.write(SRCLK,gpio.LOW)
     if(bit.isset(bb,i)) then
-      gpio.write(dataPin,gpio.HIGH)
+      gpio.write(SER,gpio.HIGH)
     else
-      gpio.write(dataPin,gpio.LOW)
+      gpio.write(SER,gpio.LOW)
     end
-    gpio.write(clockPin,gpio.HIGH)
+    gpio.write(SRCLK,gpio.HIGH)
   end
-  gpio.write(latchPin,gpio.HIGH)
+  gpio.write(RCK,gpio.HIGH)
   --all done
-  gpio.write(latchPin,gpio.HIGH)
-  gpio.write(dataPin,gpio.HIGH)
-  gpio.write(clockPin,gpio.HIGH)
+  gpio.write(RCK,gpio.HIGH)
+  gpio.write(SER,gpio.HIGH)
+  gpio.write(SRCLK,gpio.HIGH)
 end
 
 print("pwrdisp starting...")
 --init pins
-gpio.write(latchPin,gpio.HIGH)
-gpio.write(dataPin,gpio.HIGH)
-gpio.write(clockPin,gpio.HIGH)
-gpio.mode(latchPin,gpio.OUTPUT)
-gpio.mode(dataPin,gpio.OUTPUT)
-gpio.mode(clockPin,gpio.OUTPUT)
+gpio.write(RCK,gpio.HIGH)
+gpio.write(SER,gpio.HIGH)
+gpio.write(SRCLK,gpio.HIGH)
+gpio.mode(RCK,gpio.OUTPUT)
+gpio.mode(SER,gpio.OUTPUT)
+gpio.mode(SRCLK,gpio.OUTPUT)
 
 if(invert_display) then
   sout(0xffffffff)
