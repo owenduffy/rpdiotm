@@ -7,11 +7,11 @@ See project described at  .
 
 Tested on:
 NodeMCU custom build by frightanic.com
-    branch: master
-    commit: b62fae918b3627209fe434950cffb2506cee9a31
-    SSL: true
-    modules: adc,bit,dht,encoder,file,gpio,http,mqtt,net,node,ow,tmr,uart,wifi,tls
- build  built on: 2017-08-19 21:58
+	branch: master
+	commit: 2e67ff5a639a13260fd4fb3c3b627ccdc2845616
+	SSL: true
+	modules: adc,bit,dht,encoder,file,gpio,http,mqtt,net,node,ow,spi,tmr,uart,wifi,tls
+ build 	built on: 2017-09-08 02:05
  powered by Lua 5.1.4 on SDK 2.1.0(116b762)
 
 
