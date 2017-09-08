@@ -23,9 +23,9 @@ print(sval)
   return out
 end
 
-ssencode={[" "]=0x00;["0"]=0xfc;["1"]=0x60;["2"]=0xda;["3"]=0xf2;["4"]=0x66;
-  ["5"]=0xb6;["6"]=0xbe;["7"]=0xe0;["8"]=0xfe;["9"]=0xf6;["."]=0x01;["a"]=0xee;
-  ["b"]=0x3e;["c"]=0x1a;["d"]=0x7a;["e"]=0x9e;["f"]=0x8e}
+ssencoder={[" "]=0x00;["."]=0x80;["0"]=0x3f;["1"]=0x06;["2"]=0x5b;["3"]=0x4f;
+  ["4"]=0x66;["5"]=0x6d;["6"]=0x7d;["7"]=0x07;["8"]=0x7f;["9"]=0x6f;["a"]=0x77;
+  ["b"]=0x7c;["c"]=0x58;["d"]=0x5e;["e"]=0x79;["f"]=0x71;}
 
 function swf()
 --  print("wifi_SSID: "..wifi_SSID)
@@ -65,7 +65,6 @@ print(tmr.now())
         m:on("message",writedisplay)
         -- subscribe topic with qos = 0
         m:subscribe(topic,0,function(conn) print("subscribe success") end)
- --       end)
       end,
       function(conn,reason)
         print("MQTT connect failed",reason)
@@ -82,10 +81,10 @@ function writedisplay(client,mtopic,data)
       ckw=string.format("%2d",data/1000)..string.format("%02d",(data%1000)/10)
       print("Power: "..ckw)
       bb=0
-      for i=1,4 do
-        bb=bb*256+ssencode[string.sub(ckw,i,i)]
+      for i=4,1,-1 do
+        bb=bb*256+ssencoder[string.sub(ckw,i,i)]
         if(i==2) then
-          bb=bb+ssencode["."]
+          bb=bb+ssencoder["."]
         end
       end
       if(invert_display) then
@@ -107,31 +106,16 @@ end
 
 function sout(bb)
   --write LED display
-  gpio.write(RCK,gpio.LOW)
-  for i=0,31 do
-    gpio.write(SRCLK,gpio.LOW)
-    if(bit.isset(bb,i)) then
-      gpio.write(SER,gpio.HIGH)
-    else
-      gpio.write(SER,gpio.LOW)
-    end
-    gpio.write(SRCLK,gpio.HIGH)
-  end
-  gpio.write(RCK,gpio.HIGH)
-  --all done
-  gpio.write(RCK,gpio.HIGH)
-  gpio.write(SER,gpio.HIGH)
-  gpio.write(SRCLK,gpio.HIGH)
+  wl=spi.send(1,bb)
 end
 
 print("pwrdisp starting...")
---init pins
-gpio.write(RCK,gpio.HIGH)
-gpio.write(SER,gpio.HIGH)
-gpio.write(SRCLK,gpio.HIGH)
-gpio.mode(RCK,gpio.OUTPUT)
-gpio.mode(SER,gpio.OUTPUT)
-gpio.mode(SRCLK,gpio.OUTPUT)
+spi.setup(1,spi.MASTER,spi.CPOL_HIGH,spi.CPHA_HIGH,32,80)
+--Signal 	IO index 	ESP8266 pin
+--HSPI CLK 	5 	GPIO14
+--HSPI /CS 	8 	GPIO15
+--HSPI MOSI 	7 	GPIO13
+--HSPI MISO 	6 	GPIO12
 
 if(invert_display) then
   sout(0xffffffff)
