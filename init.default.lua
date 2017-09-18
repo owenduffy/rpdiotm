@@ -9,6 +9,7 @@ cfgdefs={
 "",
 "",
 "",
+""
 }
 --no need for changes below here
 cfgvars={
@@ -19,7 +20,8 @@ cfgvars={
 "mqtt_broker_port",
 "mqtt_username",
 "mqtt_password",
-"mqtt_client_id"
+"mqtt_client_id",
+"invert_display"
 }
 
 function mqreq()

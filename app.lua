@@ -106,7 +106,7 @@ end
 
 function sout(bb)
   --write LED display
-  wl=spi.send(1,bb)
+  wrote=spi.send(1,bb)
 end
 
 print("pwrdisp starting...")
