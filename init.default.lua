@@ -5,11 +5,11 @@ cfgdefs={
 "",
 "",
 "mqtt.lan",
-1883,
+"1883",
 "",
 "",
 "",
-""
+false
 }
 --no need for changes below here
 cfgvars={

@@ -68,7 +68,15 @@ srv:listen(80,function(conn)
       buf = buf .. cfgvars[1]..": <input list='apdatalist' name='"..cfgvars[1].."'><datalist id='apdatalist'>" .. apdatalist .. "</datalist><br><br>"
       i=2 
       while cfgvars[i] do
-        buf=buf .. cfgvars[i] .. ": <input type='text' name='" .. cfgvars[i] .. "' value='" .. cfgdefs[i] .. "'></input><br><br>"
+        if(type(cfgdefs[i])=="string") then
+          buf=buf .. cfgvars[i] .. ": <input type='text' name='" .. cfgvars[i] .. "' value='" .. cfgdefs[i] .. "'></input><br><br>"
+        elseif(type(cfgdefs[i])=="boolean") then
+          if(cfgdefs[i]) then
+            buf=buf .. cfgvars[i] .. ": <input name='" .. cfgvars[i] .. "' value='true' type='checkbox' checked></input><br><br>"
+          else
+            buf=buf .. cfgvars[i] .. ": <input name='" .. cfgvars[i] .. "' value='true' type='checkbox'></input><br><br>"
+            end
+          end
         i=i+1 
         end
       buf = buf .. "<br><button type='submit'>Save</button>"                   

@@ -16,4 +16,4 @@ client_ip=""
 client_netmask=""
 client_gateway=""
 
-invert_display=string.lower(invert_display)=="y"
+invert_display=invert_display=="true"
