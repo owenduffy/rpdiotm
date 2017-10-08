@@ -2,8 +2,9 @@
 
 To use the code, copy init.default.lua to init.lua, and nodevars.default.lua to nodevars.lua and customise the latter to suit your needs.
 
+![alt text](rpdiotm01.png "Flow chart")
 
-See project described at  .
+See project described at [ESP8266 remote power display for energy monitor – EV3 – 5V display](http://owenduffy.net/blog/?p=11227) .
 
 Tested on:
 NodeMCU custom build by frightanic.com
