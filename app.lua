@@ -30,7 +30,7 @@ ssencoder={[" "]=0x00;["."]=0x80;["0"]=0x3f;["1"]=0x06;["2"]=0x5b;["3"]=0x4f;
 function swf()
 --  print("wifi_SSID: "..wifi_SSID)
 --  print("wifi_password: "..wifi_password)
-  wifi.eventmon.register(wifi.eventmon.STA_GOT_IP,smq)
+  wifi.eventmon.register(wifi.eventmon.STA_GOT_IP,cbsmq)
   wifi.setmode(wifi.STATION) 
   wifi.setphymode(wifi_signal_mode)
   if client_ip ~= "" then
@@ -40,7 +40,7 @@ function swf()
   print("swf done...")
 end
 
-function smq()
+function cbsmq()
 print(tmr.now())
   print("wifi.sta.status()",wifi.sta.status())
   if wifi.sta.status() ~= 5 then
@@ -50,7 +50,7 @@ print(tmr.now())
     print("  IP: ".. mqtt_broker_ip)
     print("  Port: ".. mqtt_broker_port)
     print("WiFi connected...")
-    m:on("offline",slp)
+    m:on("offline",cbslp)
 --m:on("connect", function(client) print ("connected") end)
 --m:on("offline", function(client) print ("offline") end)
     m:connect(mqtt_broker_ip,mqtt_broker_port,0,0,
@@ -62,7 +62,7 @@ print(tmr.now())
         print("  Username: ".. mqtt_username)
         topic=mqreq()
         --setup callback for message
-        m:on("message",writedisplay)
+        m:on("message",cbwritedisplay)
         -- subscribe topic with qos = 0
         m:subscribe(topic,0,function(conn) print("subscribe success") end)
       end,
@@ -70,10 +70,10 @@ print(tmr.now())
         print("MQTT connect failed",reason)
       end)
   end
-  print("smq done...")
+  print("cbsmq done...")
 end
 
-function writedisplay(client,mtopic,data)
+function cbwritedisplay(client,mtopic,data)
   if(mtopic==topic) then
     if data ~= nil then
       --convert to hundredths of kW
@@ -99,7 +99,7 @@ function writedisplay(client,mtopic,data)
   end
 end
 
-function slp()
+function cbslp()
   print(tmr.now())
   node.dsleep(meas_period*1000000-tmr.now()+8100,2)             
 end
@@ -109,7 +109,7 @@ function sout(bb)
   wrote=spi.send(1,bb)
 end
 
-print("pwrdisp starting...")
+print("app starting...")
 spi.setup(1,spi.MASTER,spi.CPOL_HIGH,spi.CPHA_HIGH,32,80)
 --Signal 	IO index 	ESP8266 pin
 --HSPI CLK 	5 	GPIO14
