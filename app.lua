@@ -77,13 +77,19 @@ function cbwritedisplay(client,mtopic,data)
   if(mtopic==topic) then
     if data ~= nil then
       --convert to hundredths of kW
-      data=data+5
-      ckw=string.format("%2d",data/1000)..string.format("%02d",(data%1000)/10)
+      if((data/1)>9999) then
+        data=data+5
+          ckw=string.format("%2d",data/1000)..string.format("%02d",(data%1000)/10)
+          dpp=2
+        else
+          ckw=string.format("%1d",data/1000)..string.format("%03d",(data%1000)/1)
+          dpp=1
+        end
       print("Power: "..ckw)
       bb=0
       for i=4,1,-1 do
         bb=bb*256+ssencoder[string.sub(ckw,i,i)]
-        if(i==2) then
+        if(i==dpp) then
           bb=bb+ssencoder["."]
         end
       end
