@@ -77,7 +77,7 @@ function cbwritedisplay(client,mtopic,data)
   if(mtopic==topic) then
     if data ~= nil then
       --convert to hundredths of kW
-      if((data/1)>9999) then
+      if(tonumber(data)>9999) then
         data=data+5
           ckw=string.format("%2d",data/1000)..string.format("%02d",(data%1000)/10)
           dpp=2
