@@ -53,7 +53,7 @@ print(tmr.now())
     m:on("offline",cbslp)
 --m:on("connect", function(client) print ("connected") end)
 --m:on("offline", function(client) print ("offline") end)
-    m:connect(mqtt_broker_ip,mqtt_broker_port,0,0,
+    m:connect(mqtt_broker_ip,mqtt_broker_port,false,
       function(conn)
         print("Connected to MQTT")
         print("  IP: ".. mqtt_broker_ip)

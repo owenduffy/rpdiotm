@@ -14,7 +14,8 @@ wifi.sta.getap(function(t)
          apdatalist=apdatalist .. "<option value='" .. ap .. "'>"
       end
       print(available_aps)
-      tmr.alarm(0,5000,1, function() setup_server(available_aps) end )
+      wsutmr=tmr.create()
+      wsutmr:alarm(5000,tmr.ALARM_SINGLE, function() setup_server(available_aps) end )
    end
 end)
 
@@ -88,7 +89,7 @@ srv:listen(80,function(conn)
   end)
   
   print("Please connect to: " .. wifi.ap.getip())
-  tmr.stop(0)
+  wsutmr:stop()
 end
 
 function trim(s)
